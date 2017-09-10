@@ -1,0 +1,52 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+
+	<title>The Bucket List</title>
+	<meta name="description" content="The List Maker">
+	<meta name="author" content="Josh Davis">
+	
+	<link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+	<link rel="stylesheet" href="_css/normalize.css">
+	<link rel="stylesheet" href="_css/styles.css">
+</head>
+
+<body>
+	<header>
+		<h1>The Bucket List</h1>
+	</header>
+	<div id="wrapper">
+		<form id="form" action="listmaker.html" method="post">
+			
+			<label for="item">Enter Item:</label>
+			<input type="text" id="item" name="list_item" required>
+			
+			<label for="department">Grocery Department:</label>
+			<select id="department" name="list_department">
+				<option value="dairy">Dairy</option>
+				<option value="deli">Deli</option>
+				<option value="condiments">Condiments</option>
+				<option value="cereals">Cereals</option>
+				<option value="health">Health & Beauty</option>
+				<option value="meat">Meat</option>
+				<option value="baby">Baby</option>
+				<option value="cleaning">Cleaning</option>
+				<option value="bread">Bread</option>
+				<option value="frozen">Frozen</option>
+				<option value="produce">Produce</option>
+			</select>
+			
+			<button type="submit" id="additem">Add Item</button>
+			
+		</form>
+		<ul id="list">
+		</ul>
+			
+	</div>
+	
+  <script src="_js/scripts.js"></script>
+</body>
+</html>
+
