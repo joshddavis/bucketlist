@@ -15,15 +15,30 @@ var shoppingList = [
   {dept: 'Produce', items: []},
 ];
 
-//function to build the shopping list based on items stored in the array
-function buildHTML () {
-	var HTML = '';
-	for (i=0; i < shoppingList.length; i++) {
-			if (shoppingList[i].items.length > 0) {
-				HTML = HTML + '<li class="dept">' + shoppingList[i].dept + '</li><ul>' + shoppingList[i].items + '</ul>';
-			} 
-	}
-	document.getElementById('list').innerHTML = HTML;
+function buildList () {
+  var list = document.getElementById('list');
+  list.innerHTML = '';
+ 
+  shoppingList.forEach(function (element) {
+    if (element.items.length > 0) {
+
+    var department = document.createElement('li');
+    var deptText = document.createTextNode(element.dept);
+    var itemsUL = document.createElement('ul');
+    department.appendChild(deptText);
+    department.setAttribute('class', 'dept');
+    list.append(department);
+    list.append(itemsUL);
+    
+    element.items.forEach(function (e) {
+      var item = document.createElement('li');
+      var itemText = document.createTextNode(e);
+      item.appendChild(itemText);
+      item.setAttribute('class', 'item');
+      itemsUL.append(item);
+    });
+};
+  });
 }
 
 //function to HTML encode user input
@@ -37,19 +52,16 @@ document.getElementById('item').focus();
 
 //populate array with entered item then write list to page
 form.addEventListener('submit', function(e) {
-	e.preventDefault();
-	var item = encodeItem(document.getElementById('item').value);
-	var department = document.getElementById('department').value;
-	for (i=0; i < shoppingList.length; i++) {
-		if ( shoppingList[i].dept.toLowerCase() == department ) {
-			shoppingList[i].items +=  '<li class="item">' + item + '</li>';
-		}
-	}
-	buildHTML ();
-	document.querySelector('.dept').style.cssText = 'border-radius: 5px 5px 0 0; margin-top: 10px;';
-	document.getElementById('list').style.display = 'block';
-	document.getElementById('item').value = '';
-	document.getElementById('item').focus();
+  e.preventDefault();
+  var item = encodeItem(document.getElementById('item').value);
+  var department = document.getElementById('department').value;
+  var position = shoppingList.findIndex(i => i.dept.toLowerCase() === department.toLowerCase());
+  shoppingList[position].items.push(item);                    
+  buildList ();
+  document.querySelector('.dept').style.cssText = 'border-radius: 5px 5px 0 0; margin-top: 10px;';
+  document.getElementById('list').style.display = 'block';
+  document.getElementById('item').value = '';
+  document.getElementById('item').focus();
 });
 
 //sets focus back on the item field after changing department
