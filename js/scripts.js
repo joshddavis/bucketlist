@@ -15,6 +15,7 @@ var shoppingList = [
   {dept: 'Produce', items: []},
 ];
 
+//function to build list of items using DOM node functions
 function buildList () {
   var list = document.getElementById('list');
   list.innerHTML = '';
