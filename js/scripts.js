@@ -1,18 +1,18 @@
 //defining global variable for the form and initializing the shopping list array
 const form = document.getElementById('form');
 
-var shoppingList = [ 
-	{dept: 'Dairy', items: ''}, 
-	{dept: 'Deli', items: ''},  
-	{dept: 'Condiments', items: ''},
-	{dept: 'Cereals', items: ''},
-	{dept: 'Health', items: ''},
-	{dept: 'Meat', items: ''},
-	{dept: 'Baby', items: ''},
-	{dept: 'Cleaning', items: ''},
-	{dept: 'Bread', items: ''},
-	{dept: 'Frozen', items: ''},
-	{dept: 'Produce', items: ''},
+var shoppingList = [
+  {dept: 'Dairy', items: []},
+  {dept: 'Deli', items: []}, 
+  {dept: 'Condiments', items: []},
+  {dept: 'Cereals', items: []},
+  {dept: 'Health', items: []},
+  {dept: 'Meat', items: []},
+  {dept: 'Baby', items: []},
+  {dept: 'Cleaning', items: []},
+  {dept: 'Bread', items: []},
+  {dept: 'Frozen', items: []},
+  {dept: 'Produce', items: []},
 ];
 
 //function to build the shopping list based on items stored in the array
