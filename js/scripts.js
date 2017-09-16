@@ -75,10 +75,11 @@ document.getElementById('department').addEventListener('change', function() {
 document.getElementById('list').addEventListener('click', function(e) {
 	var parent = e.target.parentNode;
 	var depart = parent.previousSibling;
-	var itemToDelete = '<li class="item">' + encodeItem(e.target.innerText) + '</li>';
+	var itemToDelete = encodeItem(e.target.innerText);
 	for (i=0; i < shoppingList.length; i++) {
 		if ( depart.innerText == shoppingList[i].dept ) {
-				shoppingList[i].items = shoppingList[i].items.replace(itemToDelete, '');
+				var deletePos = shoppingList[i].items.findIndex(x => x.items === itemToDelete);
+				shoppingList[i].items.splice(deletePos, 1);
 		}
 	}
 	parent.removeChild(e.target);
