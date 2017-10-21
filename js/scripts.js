@@ -1,29 +1,45 @@
 //defining global variable for the form and initializing the shopping list array
 const form = document.getElementById('form');
 
-var shoppingList = [ 
-	{dept: 'Dairy', items: ''}, 
-	{dept: 'Deli', items: ''},  
-	{dept: 'Condiments', items: ''},
-	{dept: 'Cereals', items: ''},
-	{dept: 'Health', items: ''},
-	{dept: 'Meat', items: ''},
-	{dept: 'Baby', items: ''},
-	{dept: 'Cleaning', items: ''},
-	{dept: 'Bread', items: ''},
-	{dept: 'Frozen', items: ''},
-	{dept: 'Produce', items: ''},
+var shoppingList = [
+  {dept: 'Dairy', items: []},
+  {dept: 'Deli', items: []}, 
+  {dept: 'Condiments', items: []},
+  {dept: 'Cereals', items: []},
+  {dept: 'Health', items: []},
+  {dept: 'Meat', items: []},
+  {dept: 'Baby', items: []},
+  {dept: 'Cleaning', items: []},
+  {dept: 'Bread', items: []},
+  {dept: 'Frozen', items: []},
+  {dept: 'Produce', items: []},
 ];
 
-//function to build the shopping list based on items stored in the array
-function buildHTML () {
-	var HTML = '';
-	for (i=0; i < shoppingList.length; i++) {
-			if (shoppingList[i].items.length > 0) {
-				HTML = HTML + '<li class="dept">' + shoppingList[i].dept + '</li><ul>' + shoppingList[i].items + '</ul>';
-			} 
-	}
-	document.getElementById('list').innerHTML = HTML;
+//function to build list of items using DOM node functions
+function buildList () {
+  var list = document.getElementById('list');
+  list.innerHTML = '';
+ 
+  shoppingList.forEach(function (element) {
+    if (element.items.length > 0) {
+
+    var department = document.createElement('li');
+    var deptText = document.createTextNode(element.dept);
+    var itemsUL = document.createElement('ul');
+    department.appendChild(deptText);
+    department.setAttribute('class', 'dept');
+    list.append(department);
+    list.append(itemsUL);
+    
+    element.items.forEach(function (e) {
+      var item = document.createElement('li');
+      var itemText = document.createTextNode(e);
+      item.appendChild(itemText);
+      item.setAttribute('class', 'item');
+      itemsUL.append(item);
+    });
+};
+  });
 }
 
 //function to HTML encode user input
@@ -37,19 +53,16 @@ document.getElementById('item').focus();
 
 //populate array with entered item then write list to page
 form.addEventListener('submit', function(e) {
-	e.preventDefault();
-	var item = encodeItem(document.getElementById('item').value);
-	var department = document.getElementById('department').value;
-	for (i=0; i < shoppingList.length; i++) {
-		if ( shoppingList[i].dept.toLowerCase() == department ) {
-			shoppingList[i].items +=  '<li class="item">' + item + '</li>';
-		}
-	}
-	buildHTML ();
-	document.querySelector('.dept').style.cssText = 'border-radius: 5px 5px 0 0; margin-top: 10px;';
-	document.getElementById('list').style.display = 'block';
-	document.getElementById('item').value = '';
-	document.getElementById('item').focus();
+  e.preventDefault();
+  var item = encodeItem(document.getElementById('item').value);
+  var department = document.getElementById('department').value;
+  var position = shoppingList.findIndex(i => i.dept.toLowerCase() === department.toLowerCase());
+  shoppingList[position].items.push(item);                    
+  buildList ();
+  document.querySelector('.dept').style.cssText = 'border-radius: 5px 5px 0 0; margin-top: 10px;';
+  document.getElementById('list').style.display = 'block';
+  document.getElementById('item').value = '';
+  document.getElementById('item').focus();
 });
 
 //sets focus back on the item field after changing department
@@ -62,10 +75,11 @@ document.getElementById('department').addEventListener('change', function() {
 document.getElementById('list').addEventListener('click', function(e) {
 	var parent = e.target.parentNode;
 	var depart = parent.previousSibling;
-	var itemToDelete = '<li class="item">' + encodeItem(e.target.innerText) + '</li>';
+	var itemToDelete = encodeItem(e.target.innerText);
 	for (i=0; i < shoppingList.length; i++) {
 		if ( depart.innerText == shoppingList[i].dept ) {
-				shoppingList[i].items = shoppingList[i].items.replace(itemToDelete, '');
+				var deletePos = shoppingList[i].items.findIndex(x => x.items === itemToDelete);
+				shoppingList[i].items.splice(deletePos, 1);
 		}
 	}
 	parent.removeChild(e.target);
