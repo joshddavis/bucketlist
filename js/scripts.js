@@ -6,6 +6,7 @@ var shoppingList = [
   {dept: 'Deli', items: []}, 
   {dept: 'Condiments', items: []},
   {dept: 'Cereals', items: []},
+  {dept: 'Spices & Baking', items: []},
   {dept: 'Health', items: []},
   {dept: 'Meat', items: []},
   {dept: 'Baby', items: []},
